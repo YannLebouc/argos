@@ -1,4 +1,6 @@
 #include <cstring>
+#include <ostream>
+#include <iostream>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
@@ -8,6 +10,8 @@ int main()
 {
   constexpr int PORT = 8080;
   constexpr int BACKLOG = 5;
+  constexpr int BUFFER_SIZE = 1024;
+  
   // First socket implementation will be manual and minimalistic for speed and educational purpose
   // Second version will use the modern posix API with getaddrinfo() etc... 
 
@@ -45,6 +49,9 @@ int main()
   {
     // Handle error, shutdown program correctly
   }
-  // NEXT SESSION : Receive data from client (recv()), parse it according to to-be-defined procotol, print the result. 
-    
+  // NEXT SESSION :parse the received data according to to-be-defined procotol, print the result. 
+  // Create a client server to connect to the socket and send data
+  char buffer[BUFFER_SIZE] {0};
+  int bytes_received = recv(new_socket_fd, &buffer, sizeof(buffer), 0);
+  std::cout << "Message received : " << buffer << std::endl; 
 }
