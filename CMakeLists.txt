@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.15)
+
 # Base project name and language used 
 project(basalt LANGUAGES CXX)
 
