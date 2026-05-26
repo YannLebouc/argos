@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Base project name and language used 
-project(basalt LANGUAGES CXX)
+project(argos LANGUAGES CXX)
 
 # Force the compiler to use the C++20 standard
 set(CMAKE_CXX_STANDARD 20)
@@ -16,10 +16,10 @@ add_library(storage STATIC storage/storage.cpp)
 add_library(protocol STATIC protocol/protocol.cpp)
 
 # Define the main executable
-add_executable(server_app core/main.cpp)
+add_executable(argos_server core/main.cpp)
 
 # Link the internal modules to the main executable
-target_link_libraries(server_app PRIVATE networking storage protocol)
+target_link_libraries(argos_server PRIVATE networking storage protocol)
 
 # Allow include paths to look like: #include "networking/networking.hpp"
-target_include_directories(server_app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(argos_server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
