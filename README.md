@@ -1,109 +1,60 @@
 # Argos
 
-Experimental backend & edge monitoring system built in modern C++.
+An experimental Edge Monitoring & Automation System designed for Smart Buildings and industrial IoT environments. 
 
-Current focus:
-learning and exploring networking, systems programming, protocol design and backend reliability through a real-world oriented project.
+Argos is an architectural exploration of how a lightweight, resilient edge controller can orchestrate distributed micro-automates (sensors/actuators) on a local network without relying on cloud dependencies.
 
----
+## Architecture Overview
 
-## Current state
+The system is built as a hybrid, multi-language architecture to optimize performance and development efficiency:
+* **Argos Server (Edge Controller):** Built in Go (Golang) for efficient, asynchronous multi-client networking and high-concurrency stream processing.
+* **Field Nodes (Micro-automates):** Built in modern C++ on ESP32 microcontrollers for direct hardware control and low-level protocol compliance.
 
-Argos currently includes:
 
-* TCP server built on POSIX sockets
-* line-based protocol over TCP
-* incremental stream parsing
-* multiple message handling
-* basic request/response workflow
-* Linux command-line testing with `netcat`
 
-The project is intentionally developed incrementally to better understand:
+## Current State & Features
 
-* networking fundamentals,
-* backend architecture,
-* reliability,
-* protocol design,
-* and systems programming concepts.
+Argos is developed incrementally with a focus on understanding networking and system fundamentals from first principles:
+* **Asynchronous TCP Engine:** Multi-client TCP server utilizing Go's native high-concurrency model (Goroutines).
+* **Line-based Protocol:** Stream parsing over TCP for structural validation of incoming environmental data.
+* **Basic Request/Response:** Synchronous acknowledgment workflow between the edge controller and field clients.
+* **Edge Simulation:** Tested locally under Linux environments using standard network utilities (`netcat`).
 
----
+## Roadmap & GTB Strategy (2-3 Weeks Focus)
 
-## Goals
+The project is moving toward a concrete Smart Building hardware showcase:
+- [ ] **Go Core Migration:** Porting the initial POSIX C++ socket architecture into a clean, concurrent Go network layer.
+- [ ] **Hardware Node (C++):** Deploying an ESP32 node wired to a DS18B20 thermal sensor via a One-Wire bus.
+- [ ] **Local Storage (Mini-WAL):** Implementing an append-only Write-Ahead Log for crash-resilient metric persistence.
+- [ ] **Industrial Standard Exploration:** Transitioning the application layer toward standard automation protocols (Modbus TCP / MQTT).
 
-Argos aims to progressively evolve into a small monitoring & automation platform for edge devices and environmental sensors.
+## Core Technical Interests
 
-Long-term exploration topics include:
-
-* edge nodes on Raspberry Pi
-* ESP32 sensor integration
-* temperature / environment monitoring
-* logging & observability
-* persistence & WAL-based recovery
-* multi-client handling
-* reliability and fault tolerance
-* lightweight automation & alerting
-
----
-
-## Technical interests explored
-
-* modern C++
-* Linux systems programming
-* TCP networking
-* backend architecture
-* protocol parsing
-* RAII & ownership
-* concurrency
-* persistence & recovery
-* observability
-
----
+* **Hybrid Engineering:** Combining C++ (Hardware/Embedded) and Go (Systems/Networking).
+* **Industrial Networking:** Sockets, TCP/IP streams, protocol parsing, and local infrastructure security.
+* **System Resilience:** Fault tolerance, WAL-based data recovery, and edge autonomy.
+* **Observability:** Time-series data logging and localized monitoring.
 
 ## Philosophy
 
-Argos is built with a strong focus on:
+Argos strictly follows a **pragmatic, explicit, and anti-over-engineering** philosophy. 
+The goal is to deeply master the underlying systems (network layers, hardware constraints, file I/O operations) before building abstractions. It values software craftsmanship, simple codebases, and physical real-world utility over corporate framework bloat.
 
-* simplicity,
-* explicit design,
-* maintainability,
-* incremental development,
-* and understanding systems deeply before optimizing them.
+## Getting Started
 
-The goal is not to build a “framework” or over-engineered platform,
-but to progressively construct a small, understandable and reliable system.
+### Prerequisites
+* Go compiler (1.20+)
+* C++20 compatible compiler & PlatformIO (for ESP32 firmware)
 
----
-
-## Build
-
-Requirements:
-
-* CMake >= 3.15
-* C++20 compatible compiler
-
-Build:
+### Running the Server
 
 ```bash
-cmake -B build
-cmake --build build
+go run main.go
 ```
-
-Run:
-
-```bash
-./build/server_app
-```
-
-Test with:
-
+Testing the Network Layer
 ```bash
 nc localhost 8080
 ```
 
----
-
 ## Status
-
-Early experimental stage.
-
-Architecture, protocol and implementation details will evolve progressively as the project grows.
+Active experimental stage. Evolving from a pure network playground into a functional, localized Smart Building telemetry platform.
