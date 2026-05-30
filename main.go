@@ -7,17 +7,16 @@ import (
 )
 
 const (
-	host           = "localhost"
-	port           = "8080"
 	connectionType = "tcp"
 	bufferSize     = 1024
-	address        = host + ":" + port
 )
 
 func main() {
-	fmt.Println("Starting TCP server on port : " + port)
+	cfg := LoadConfig()
 
-	listen, err := net.Listen(connectionType, address)
+	fmt.Println("Starting TCP server on port : " + cfg.Port)
+
+	listen, err := net.Listen(connectionType, cfg.Port)
 	if err != nil {
 		fmt.Printf("error starting server : %s", err.Error())
 		os.Exit(1)
