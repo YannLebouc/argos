@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log/slog"
 	"net"
 	"os"
 )
@@ -13,15 +13,16 @@ const (
 
 func main() {
 	cfg := LoadConfig()
+	InitLogger(&cfg)
 
-	fmt.Println("Starting TCP server on port : " + cfg.Port)
+	slog.Info("Starting TCP server", "PORT", cfg.Port)
 
 	listen, err := net.Listen(connectionType, cfg.Port)
 	if err != nil {
-		fmt.Printf("error starting server : %s", err.Error())
+		slog.Error("error while starting the server...", slog.String("error", err.Error()))
 		os.Exit(1)
 	}
 	defer listen.Close()
 
-	fmt.Println("TCP server now listening on address : " + listen.Addr().String())
+	slog.Info("TCP server now listening : ", slog.String("address", listen.Addr().String()))
 }
